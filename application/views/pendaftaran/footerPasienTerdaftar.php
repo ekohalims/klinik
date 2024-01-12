@@ -136,6 +136,26 @@
             }
         });
     });
+    
+    $(document).on("click",".tambahTendik",function(){
+        var nim = this.id;
+
+        $.ajax({
+            method : "POST",
+            url :  "<?php echo base_url('pendaftaranRajal/simpanPasienTendik'); ?>",
+            data : {nim : nim},
+            success : function(response){
+                if(response=='Failed'){
+                    $.Notification.autoHideNotify('error','top right', 'Gagal!', 'Harap ulangi kembali'); 
+                } else {
+                    $.Notification.autoHideNotify('success','top right', 'Berhasil!', 'Menambahkan Pasien Baru'); 
+                    tampilkanDataPasienLangsung(response);
+                    $('#myModalMhs').hide();
+                    $('.modal-backdrop').remove();
+                }
+            }
+        });
+    });
 
     $('#jenisRujukan').change(function(){
         var jenisRujukan = $(this).val();

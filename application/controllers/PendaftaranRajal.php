@@ -275,17 +275,17 @@ class PendaftaranRajal extends BaseController{
 		$start = $_REQUEST['start'];
 		$search = $_REQUEST['search']["value"];
 
-		$total = $this->modelAPI->dataMhs()->num_rows();
+		$total = $this->modelAPI->dataTendik()->num_rows();
 		$output = array();
 		$output['draw']	 = $draw;
 		$output['recordsTotal'] = $output['recordsFiltered']=$total;
 		$output['data'] = array();
 
 		if($search!=""){
-			$query = $this->modelAPI->viewMhsDatatables($length,$start,$search);
+			$query = $this->modelAPI->viewTendikDatatables($length,$start,$search);
 			$output['recordsTotal'] = $output['recordsFiltered'] = $query->num_rows();
 		} else {
-			$query = $this->modelAPI->viewMhsDatatables($length,$start,$search);
+			$query = $this->modelAPI->viewTendikDatatables($length,$start,$search);
 		}
 
 		$nomor_urut=$start+1;
@@ -294,7 +294,7 @@ class PendaftaranRajal extends BaseController{
 			$cekPasien = $this->modelAPI->cekPasien($dt['nim']);
 
 			if(empty($cekPasien)){
-				$tmbah = "<a class='tambahMHS label label-success' id='".$dt['nim']."'>Tambah Pasien</a>";
+				$tmbah = "<a class='tambahTendik label label-success' id='".$dt['nim']."'>Tambah Pasien</a>";
 			}else{
 				$tmbah = "Sudah Terdaftar";
 			}
@@ -302,9 +302,9 @@ class PendaftaranRajal extends BaseController{
 			$output['data'][]=array(
 				$nomor_urut,
 				$tmbah,
-				$dt['nim'],
+				$dt['npp'],
 				$dt['nama'],
-				$dt['sex'],
+				$dt['jenis_kelamin'],
 				// $dt['alamat'],
 				 $dt['hp'],
 				// $dt['email'],
@@ -312,8 +312,8 @@ class PendaftaranRajal extends BaseController{
 				// date_format(date_create($dt['tgllahir']),'d-m-Y'),
 				// $dt['namaagama'],
 				// $dt['namastatus'],
-				$dt['statussemester'],
-				$dt['namaunit']
+				$dt['st_pegawai'],
+				$dt['st_dosen']
 				// $dt['kodeunit'],
 				// $dt['nik']
 			);

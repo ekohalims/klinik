@@ -50,7 +50,7 @@ class ModelAPI extends CI_Model {
         if(!empty($nim)){
             $sql .= " and ms.nim = '$nim' ";
         }
-         $sql .= " order by ms.nim";
+         $sql .= " order by ms.nim asc";
         
 		return $this->db_server->query($sql);
 	}
@@ -70,6 +70,37 @@ class ModelAPI extends CI_Model {
 			$this->db_server->like("ms.nim",$search);
 			$this->db_server->or_like("ms.nama",$search);
 			$this->db_server->or_like("ms.hp",$search);
+		}
+
+		$this->db_server->limit($limit,$start);
+
+		return $this->db_server->get();
+	}
+    
+    function dataTendik($npp = NULL){
+		$sql = "SELECT dt_ketenagaan.npp, dt_ketenagaan.nama, dt_ketenagaan.nik, dt_ketenagaan.jenis_kelamin, dt_ketenagaan.email, dt_ketenagaan.hp, dt_ketenagaan.tempat_lahir,
+        dt_ketenagaan.tanggal_lahir, dt_ketenagaan.agama, dt_ketenagaan.st_pegawai, dt_ketenagaan.st_dosen, dt_ketenagaan.alamat_domisili, dt_ketenagaan.rt, dt_ketenagaan.rw, 
+        dt_ketenagaan.kecamatan, dt_ketenagaan.kelurahan, dt_ketenagaan.kota, dt_ketenagaan.alamat, dt_ketenagaan.st_keluarga FROM ketenagaan.dt_ketenagaan 
+        WHERE del ='N' and st_pegawai in ('Tetap','Kontrak','')";
+        if(!empty($npp)){
+            $sql .= " and dt_ketenagaan.npp = '$npp' ";
+        }
+         $sql .= " order by dt_ketenagaan.npp asc";
+        
+		return $this->db_server->query($sql);
+	}
+
+    function viewTendikDatatables($limit,$start,$search){
+		$this->db_server->select(array("dt_ketenagaan.npp", "dt_ketenagaan.nama", "dt_ketenagaan.nik", "dt_ketenagaan.jenis_kelamin", "dt_ketenagaan.email", "dt_ketenagaan.hp", "dt_ketenagaan.tempat_lahir",
+        "dt_ketenagaan.tanggal_lahir", "dt_ketenagaan.agama", "dt_ketenagaan.st_pegawai", "dt_ketenagaan.st_dosen", "dt_ketenagaan.alamat_domisili", "dt_ketenagaan.rt", "dt_ketenagaan.rw", 
+        "dt_ketenagaan.kecamatan", "dt_ketenagaan.kelurahan", "dt_ketenagaan.kota", "dt_ketenagaan.alamat", "dt_ketenagaan.st_keluarga"));
+        $where = "del ='N' and st_pegawai in ('Tetap','Kontrak','')";
+        $this->db_server->where($where);
+
+		if(!empty($search)){
+			$this->db_server->like("dt_ketenagaan.npp",$search);
+			$this->db_server->or_like("dt_ketenagaan.nama",$search);
+			$this->db_server->or_like("dt_ketenagaan.nik",$search);
 		}
 
 		$this->db_server->limit($limit,$start);

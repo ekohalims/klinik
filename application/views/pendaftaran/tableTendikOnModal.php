@@ -13,8 +13,8 @@
             <th>Tgl Lahir</th>
             <th>Agama</th>
             <th>Status</th> -->
-            <th>Status SMT</th> 
-            <th>Unit</th>
+            <th>Status Pegawai</th> 
+            <th>Status Dosen</th>
             <!-- <th>KU</th>
             <th>NIK</th> -->
         </tr>
